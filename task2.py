@@ -1,59 +1,68 @@
-
 class Product:
-    # ... (Base class remains the same) ... 
+    def __init__(self, product_id: str, name: str, price: float):
+        self.product_id = product_id
+        self.name = name
+        self.price = price
 
- class Book("Product"):
-    # ... (Book class remains the same) ...
+    def display_info(self):        
+        print("-" * 20)
+        print("Product Information:")
+        print(f"  ID: {self.product_id}")
+        print(f"  Name: {self.name}")
+        print(f"  Price: ${self.price:.2f}")
 
-  class Electronic("Product"):
-    # ... (Electronic class remains the same) ...
+class Clothing(Product):
+    
+    def __init__(self, product_id: str, name: str, price: float, size: str):
+        super().__init__(product_id, name, price)
+        self.size = size
 
-   class Clothing("Product"):
-    # ... (Clothing class remains the same) ...
+    def display_info(self):
+    
+        super().display_info() 
+        print(f"  Size: {self.size}")
 
-# Instantiate objects
-    book1 = "Book"("B001", "The Lord of the Rings", 24.99, "J.R.R. Tolkien", "9780547928227")
-laptop1 = "Electronic"("E002", "SuperLaptop", 999.00, "TechGiant", {"Processor": "UltraChip", "RAM": "16GB", "Storage": "1TB SSD"})
-jeans1 = "Clothing"("C002", "Denim Jeans", 39.99, "M", "Blue", "Denim")
+class Book(Product):    
+    def __init__(self, product_id: str, name: str, price: float, author: str):
+        super().__init__(product_id, name, price)
+        self.author = author
 
-# Call display methods
-print("Book Details:")
-book1 = "display_info"()
-print("\n---\n")
+    def display_info(self):    
+        super().display_info() 
+        print(f"  Author: {self.author}")
 
-# Expected Output:
-# Book Details:
-# Product ID: B001
-# Name: The Lord of the Rings
-# Price: $ 24.99
-# Author: J.R.R. Tolkien
-# ISBN: 9780547928227
-# ---
+    
 
-print("Laptop Details:")
-laptop1.display_info()
-print("\n---\n")
+class Electronic(Product):
+    def __init__(self, product_id: str, name: str, price: float, specs: str):
+        super().__init__(product_id, name, price)
+        self.specs = specs
 
-# Expected Output:
-# Laptop Details:
-# Product ID: E002
-# Name: SuperLaptop
-# Price: $ 999.0
-# Brand: TechGiant
-# Specifications:
-#   Processor: UltraChip
-#   RAM: 16GB
-#   Storage: 1TB SSD
-# ---
+    def display_info(self):        
+        super().display_info() 
+        print(f"  Specifications: {self.specs}")
 
-print("Jeans Details:")
-jeans1.display_info() 
 
-# Expected Output:
-# Jeans Details:
-# Product ID: C002
-# Name: Denim Jeans
-# Price: $ 39.99
-# Size: M
-# Color: Blue
-# Material: Denim 
+    
+
+class Clothing(Product):
+    
+    def __init__(self, product_id: str, name: str, price: float, size: str):
+        super().__init__(product_id, name, price)
+        self.size = size
+
+    def display_info(self):
+        
+        super().display_info() 
+        print(f"  Size: {self.size}")
+
+
+book = Book("B001", "The Hitchhiker's Guide to the Galaxy", 12.99, "Douglas Adams")
+electronic = Electronic("E002", "iPhone 15", 999.99, "6.1-inch display, A17 Bionic chip")
+clothing = Clothing("C003", "Levi's Jeans", 59.99, "32W x 32L")
+
+book.display_info()
+print("-" * 20)  
+electronic.display_info()
+print("-" * 20) 
+clothing.display_info()

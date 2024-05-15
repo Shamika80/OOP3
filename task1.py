@@ -1,31 +1,69 @@
 class BudgetCategory:
-    # ... (Your existing code remains the same) ...
+    def __init__(self, name: str, budget: float):
+    
+        self._name = name
+        self._budget = budget
+        self._expenses = 0.0
 
-    def display_details(self):
-        """Displays the details of the budget category."""
-        print("Category Name:", self.__category_name)
-        print("Allocated Budget: ${:.2f}".format(self.__allocated_budget))
-        print("Total Expenses: ${:.2f}".format(self._get_expenses()))
-        print("Expenses:")  # Added to display individual expenses
-        for expense in self.__expenses:
-            print("- ${:.2f}".format(expense))  # Display each expense
+    @property
+    def name(self) -> str:
 
-    def add_expense(self, amount):
-        """Adds an expense to the budget category."""
-        self.__expenses.append(amount)  # Add expense to the list
-        self.__allocated_budget -= amount  # Reduce allocated budget by expense
+        return self._name
 
-    # ... (Rest of your getter, setter, add_expense, display_details methods) ...
+    @property
+    def budget(self) -> float:
 
-    def _get_expenses(self):
-        return self.__original_budget - self.__allocated_budget 
+        return self._budget
 
-# Create a budget category (Correct way)
-grocery_budget = BudgetCategory("Groceries", 200)
+    @property
+    def expenses(self) -> float:
+        
+        return self._expenses
 
-# Add some expenses
-grocery_budget.add_expense(55)
-grocery_budget.add_expense(30)
+    @property
+    def remaining_budget(self) -> float:
+    
+        return self._budget - self._expenses
 
-# Display the category details
-grocery_budget.display_details()
+    @budget.setter
+    def budget(self, new_budget: float):
+        
+        if new_budget >= 0:
+            self._budget = new_budget
+        else:
+            raise ValueError
+
+    @name.setter
+    def name(self, new_name: str):
+
+
+        if new_name.strip():  
+            self._name = new_name
+        else:
+            raise ValueError
+
+    def add_expense(self, amount: float):
+
+
+        if amount <= 0:
+            raise ValueError
+        if amount > self.remaining_budget:
+            raise ValueError
+
+        self._expenses += amount
+
+    def __str__(self) -> str:
+        
+        return (
+            f"Category: {self._name}\n"
+            f"Allocated Budget: ${self._budget:.2f}\n"
+            f"Expenses: ${self._expenses:.2f}\n"
+            f"Remaining Budget: ${self.remaining_budget:.2f}"
+        )
+
+
+grocery_category = BudgetCategory("Groceries", 250.00)
+grocery_category.add_expense(50.00)
+grocery_category.add_expense(75.50)
+
+print(grocery_category)
